@@ -1,22 +1,12 @@
-import polars as pl
-
+from kirvin.clean import clean
 from kirvin.load import load
 
 data_raw = load()
+data = clean(data_raw)
 
-data = pl.DataFrame(data_raw)
 
-print(
-    data.select(
-        # text columns
-        pl.col("ID"),
-        pl.col("KenmerkenBaan"),
-        pl.col("Perioden"),
-        pl.col("BedrijfstakkenBranchesSBI2008"),
-        # convert all other columns to floats
-        pl.all()
-        .exclude(["ID", "KenmerkenBaan", "Perioden", "BedrijfstakkenBranchesSBI2008"])
-        .str.strip_chars()
-        .cast(pl.Int32),
-    )
-)
+print(data)
+# print(data.group_by("BedrijfstakkenBranchesSBI2008").agg(pl.count()))
+# print(data.group_by("KenmerkenBaan").agg(pl.count()))
+
+# df = pl.DataFrame(data_raw)
