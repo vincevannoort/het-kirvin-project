@@ -14,16 +14,18 @@ COPY poetry.lock pyproject.toml /code/
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi
 
+# copy the rest of the files
+COPY main.py /code/main.py
+COPY kirvin /code/kirvin
+
+# invalidate caching layers from now on
+ADD http://date.jsontest.com /etc/builddate
 # download data
 RUN curl -LO  https://cdn.knmi.nl/knmi/map/page/klimatologie/gegevens/uurgegevens/jaar.zip --output jaar.zip
 # create data folder
 RUN mkdir -p data
 # unzip to data folder
 RUN unzip jaar.zip -d data
-
-# copy the rest of the files
-COPY main.py /code/main.py
-COPY kirvin /code/kirvin
 
 # run python
 RUN poetry run python main.py
