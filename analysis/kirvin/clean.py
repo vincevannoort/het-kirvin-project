@@ -1,15 +1,40 @@
 from polars import DataFrame, Utf8, all, col, concat_str, lit, when
 
+from kirvin.columns import Column
+
 
 def rename(data: DataFrame) -> DataFrame:
     # remove whitespace from column names
     data = data.rename({name: name.strip() for name in data.columns})
     # rename
     data = data.rename(
+        # mapping column names of the dataset to our desired column names
         {
-            "# STN": "station",
-            "YYYYMMDD": "date_day",
-            "HH": "hour",
+            "# STN": Column.station,
+            "YYYYMMDD": Column.date,
+            "HH": Column.hour,
+            "DD": Column.wind_direction,
+            "FH": Column.wind_speed,
+            "FF": Column.mean_wind_speed_10_min,
+            "FX": Column.wind_gust,
+            "T": Column.temperature,
+            "T10N": Column.min_temperature_6_hours,
+            "TD": Column.dew_point_temperature,
+            "SQ": Column.sunshine_duration,
+            "Q": Column.global_radiation,
+            "DR": Column.precipitation_duration,
+            "RH": Column.hourly_precipitation,
+            "P": Column.air_pressure,
+            "VV": Column.horizontal_visibility,
+            "N": Column.cloud_coverage,
+            "U": Column.relative_atmospheric_humidity,
+            "WW": Column.weather_code,
+            "IX": Column.weather_indicator,
+            "M": Column.fog,
+            "R": Column.rainfall,
+            "S": Column.snow,
+            "O": Column.thunder,
+            "Y": Column.ice,
         }
     )
     return data
@@ -32,19 +57,19 @@ def clean(data: DataFrame) -> DataFrame:
             .keep_name(),
         )
         # cast string to int
-        .with_columns(all().exclude("station").cast(int))
+        .with_columns(all().exclude(Column.station).cast(int))
         # dates
         .with_columns(
             # cast int to date
-            col("date_day").cast(str).str.to_date("%Y%m%d"),
+            col(Column.date).cast(str).str.to_date("%Y%m%d"),
             # create datetime from date_day and hour
             concat_str(
                 [
                     # date
-                    col("date_day").cast(str),
+                    col(Column.date).cast(str),
                     (
                         # subtract 1 hour
-                        (col("hour") - (1))
+                        (col(Column.hour) - (1))
                         # and pad hour format
                         .cast(str)
                         .str.rjust(2, fill_char="0")
@@ -54,7 +79,7 @@ def clean(data: DataFrame) -> DataFrame:
                 ]
             )
             .str.to_datetime("%Y%m%d%H%M")
-            .alias("datetime"),
+            .alias(Column.date_time),
         )
     )
     return data_clean
