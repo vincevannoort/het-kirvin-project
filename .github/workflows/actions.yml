@@ -2,23 +2,64 @@ name: ci
 
 on: 
   push:
-  pull_request:
   schedule:
     - cron: '0 9 * * *'
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
-  docker:
+  analysis:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Build and push
+
+      - name: Build analysis dockerfile
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:analysis"
+          context: analysis
           push: false
-          tags: user/app:latest
+          tags: analysis:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          load: true
+
+      - name: Run analysis dockerfile
+        uses: addnab/docker-run-action@v3
+        with:
+          image: analysis:latest
+          options: -v ${{ github.workspace }}/data/export:/code/data/export
+          run: poetry run python main.py
+
+      - name: Copy files
+        run: cp -R data/export dashboard/data
+
+      - name: Build dashboard dockerfile
+        uses: docker/build-push-action@v5
+        with:
+          context: dashboard
+          push: false
+          tags: dashboard:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          load: true
+      
+      - name: Run dashbboard dockerfile
+        uses: addnab/docker-run-action@v3
+        with:
+          image: dashboard:latest
+          options: -v ${{ github.workspace }}/build:/app/build
+          run: |
+            yarn build
+            cp -R out build/
+
+      - name: Deploy to GitHub pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/out
