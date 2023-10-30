@@ -11,4 +11,4 @@ tab_temp_day = create_tab(data)
 print(tab_temp_day)
 
 # save
-tab_temp_day.write_csv("data/tab_temp_day.csv")
+tab_temp_day.write_json("./data/export/temperature_per_day.json", row_oriented=True)

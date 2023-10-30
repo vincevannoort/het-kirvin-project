@@ -1,11 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": "analysis"
 		},
 		{
-			"path": "analysis"
+			"path": "dashboard"
 		}
-	],
-	"settings": {}
+	]
 }

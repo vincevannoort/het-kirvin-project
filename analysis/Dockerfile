@@ -1,5 +1,8 @@
 FROM python:3.11.5-slim
 
+# create data volume
+VOLUME /code/data/export
+
 # install poetry
 RUN apt-get -y update; apt-get -y install curl unzip
 RUN curl -sSL https://install.python-poetry.org | python3 -
@@ -26,6 +29,5 @@ RUN curl -LO  https://cdn.knmi.nl/knmi/map/page/klimatologie/gegevens/uurgegeven
 RUN mkdir -p data
 # unzip to data folder
 RUN unzip jaar.zip -d data
-
 # run python
-RUN poetry run python main.py
+CMD [ "poetry", "run" , "python", "main.py"]

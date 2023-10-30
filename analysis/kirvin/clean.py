@@ -81,20 +81,8 @@ def clean(data: DataFrame) -> DataFrame:
             .str.to_datetime("%Y%m%d%H%M")
             .alias(Column.date_time),
         )
+        .with_columns(
+            col(Column.temperature) / 10,
+        )
     )
     return data_clean
-
-    # # convert temperature format from 245 to 24.5
-    # .with_columns(
-    #     (col("T") / 10),
-    # )
-    # .with_columns(
-    #     # include average temperate at hour column for each hour
-    #     col("T").mean().over("hour").alias("mean_temp_hour"),
-    #     col("T").mean().over("date_day").alias("mean_temp_day"),
-    # )
-
-
-# specific cleaning
-
-# enrich
