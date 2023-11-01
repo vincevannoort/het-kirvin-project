@@ -1,14 +1,17 @@
+from kirvin.analyse.temperature_per_day import analyse_temperature_per_day
+from kirvin.analyse.temperature_per_station import analyse_temperature_per_station
 from kirvin.clean import clean
-from kirvin.create_tab import create_tab
 from kirvin.load import load
 
 data_raw = load()
 data = clean(data_raw)
-print(data)
 
 # create dataset
-tab_temp_day = create_tab(data)
-print(tab_temp_day)
+temperature_per_day = analyse_temperature_per_day(data)
+temperature_per_station = analyse_temperature_per_station(data)
+print(temperature_per_day)
+print(temperature_per_station)
 
 # save
-tab_temp_day.write_json("./data/export/temperature_per_day.json", row_oriented=True)
+temperature_per_day.write_json("./data/export/temperature_per_day.json", row_oriented=True)
+temperature_per_station.write_json("./data/export/temperature_per_station.json", row_oriented=True)
