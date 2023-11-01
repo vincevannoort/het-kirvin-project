@@ -42,6 +42,9 @@ export default function TemperaturePerStation() {
         title: {
             text: 'Temperature per day',
         },
+        tooltip: {
+            shared: true
+        },
         subtitle: {
             text: 'Example',
         },
