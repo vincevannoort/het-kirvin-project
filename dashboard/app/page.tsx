@@ -1,11 +1,11 @@
 "use client"
-import Chart from '@/components/chart'
 import styles from './page.module.css'
+import TemperaturePerStation from '@/components/temperature-per-station'
 
 export default function Home() {
   return (
-    <main className={styles.container}>
-      <Chart />
-    </main>
+    <div className={styles.container}>
+      <TemperaturePerStation />
+    </div>
   )
 }
