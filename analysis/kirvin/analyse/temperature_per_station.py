@@ -13,7 +13,7 @@ def analyse_temperature_per_station(data: DataFrame) -> DataFrame:
             maintain_order=True,
         )
         .agg(
-            col(Column.temperature).mean(),
+            col(Column.temperature).mean().round(1),
         )
         # convert date to timestamp
         .with_columns(col(Column.date).dt.timestamp("ms"))
