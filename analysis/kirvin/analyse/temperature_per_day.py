@@ -13,6 +13,6 @@ def analyse_temperature_per_day(data: DataFrame) -> DataFrame:
             col(Column.temperature).mean(),
         )
         # convert date to timestamp
-        .with_columns(col(Column.date).dt.timestamp())
+        .with_columns(col(Column.date).dt.timestamp("ms"))
     )
     return tab

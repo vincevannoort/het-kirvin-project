@@ -16,7 +16,7 @@ def analyse_temperature_per_station(data: DataFrame) -> DataFrame:
             col(Column.temperature).mean(),
         )
         # convert date to timestamp
-        .with_columns(col(Column.date).dt.timestamp())
+        .with_columns(col(Column.date).dt.timestamp("ms"))
         # create row per station
         .groupby(
             Column.station,
