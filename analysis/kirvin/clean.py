@@ -1,6 +1,7 @@
 from polars import DataFrame, Utf8, all, col, concat_str, lit, when
 
 from kirvin.columns import Column
+from kirvin.stations import Station
 
 
 def rename(data: DataFrame) -> DataFrame:
@@ -86,5 +87,9 @@ def clean(data: DataFrame) -> DataFrame:
         )
         # drop columns where temperature is not known
         .drop_nulls(Column.temperature)
+        # replace station integers with station names
+        .with_columns(
+            col(Column.station).cast(str).map_dict(Station.create_int_string_mapping()),
+        )
     )
     return data_clean
