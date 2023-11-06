@@ -19,6 +19,8 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          driver: docker
 
       - name: Build analysis dockerfile
         uses: docker/build-push-action@v5
@@ -26,8 +28,6 @@ jobs:
           context: analysis
           push: false
           tags: analysis:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
           load: true
 
       - name: Run analysis dockerfile
@@ -46,8 +46,6 @@ jobs:
           context: dashboard
           push: false
           tags: dashboard:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
           load: true
       
       - name: Run dashbboard dockerfile
