@@ -58,6 +58,6 @@ class Station(IntEnum):
         return {
             # create mapping from string number to station name
             # example: { "391": "arcen" }
-            str(station.value): station.name.lower().replace("_", " ")
+            str(station.value): station.name.lower().replace("_", " ").title()
             for station in cls
         }
