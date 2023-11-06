@@ -28,7 +28,6 @@ jobs:
           context: analysis
           push: false
           tags: analysis:latest
-          load: true
 
       - name: Run analysis dockerfile
         uses: addnab/docker-run-action@v3
@@ -46,7 +45,6 @@ jobs:
           context: dashboard
           push: false
           tags: dashboard:latest
-          load: true
       
       - name: Run dashbboard dockerfile
         uses: addnab/docker-run-action@v3
