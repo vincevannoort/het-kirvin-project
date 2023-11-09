@@ -84,6 +84,7 @@ def clean(data: DataFrame) -> DataFrame:
         )
         .with_columns(
             col(Column.temperature) / 10,
+            col(Column.sunshine_duration) / 10,
         )
         # drop columns where temperature is not known
         .drop_nulls(Column.temperature)
