@@ -6,7 +6,11 @@ from kirvin.columns import Column
 def analyse_sunshine_per_day(data: DataFrame) -> DataFrame:
     tab = (
         data
-        # sum up amount of sunhine per day per station
+        # each row contains the duration of sunshine per hour
+        # when we sum up per day, we have the amount of sunhine per day instead of hour
+        # 0   ->  0 hours of sunshine in the last hour
+        # 0.5 ->  0.5 hours of sunshine in the last hour
+        # 1   ->  1 hour of sunshine in the last hour
         .group_by(
             Column.date,
             Column.station,
@@ -15,7 +19,7 @@ def analyse_sunshine_per_day(data: DataFrame) -> DataFrame:
         .agg(
             col(Column.sunshine_duration).sum(),
         )
-        # take average over sunshine duration per station
+        # take average over sunshine duration per day
         .group_by(
             Column.date,
             maintain_order=True,
