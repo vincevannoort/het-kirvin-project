@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from kirvin.analyse.sunshine_per_day import analyse_sunshine_per_day
 from kirvin.analyse.temperature_per_day import analyse_temperature_per_day
 from kirvin.analyse.temperature_per_station import analyse_temperature_per_station
 from kirvin.clean import clean
@@ -18,11 +19,13 @@ data = clean(data_raw)
 # analyse and create datasets
 temperature_per_day = analyse_temperature_per_day(data)
 temperature_per_station = analyse_temperature_per_station(data)
+sunshine_per_day = analyse_sunshine_per_day(data)
 
 # save datasets
 for _file_name, dataset in [
     ("temperature_per_day", temperature_per_day),
     ("temperature_per_station", temperature_per_station),
+    ("sunshine_per_day", sunshine_per_day),
 ]:
     print(dataset)
     # copy to export folder
