@@ -83,3 +83,11 @@ class Column(StrEnum):
 
     # Ice formation 0=no occurrence, 1=occurred during the preceding hour and/or at the time of observation
     ice = auto()
+
+    @property
+    def max_column(self) -> str:
+        return f"max_{self}"
+
+    @property
+    def min_column(self) -> str:
+        return f"min_{self}"
