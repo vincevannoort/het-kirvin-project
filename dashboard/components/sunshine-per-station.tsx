@@ -7,7 +7,6 @@ import HighchartsReact from 'highcharts-react-official'
 
 export default function TemperaturePerStation() {
 
-
     let series: Array<SeriesLineOptions> = [
         // create line for average
         {
@@ -22,12 +21,9 @@ export default function TemperaturePerStation() {
         },
     ]
 
-
-
-
     const options: Highcharts.Options = {
         chart: {
-            height: 700,
+            height: "50%",
         },
         title: {
             text: 'Sunshine per day',
@@ -51,7 +47,6 @@ export default function TemperaturePerStation() {
         },
         series: series
     }
-
 
     return (
         <div>

@@ -32,12 +32,9 @@ export default function TemperaturePerStation() {
         }) as Array<SeriesLineOptions>
     ]
 
-
-
-
     const options: Highcharts.Options = {
         chart: {
-            height: 700,
+            height: "50%",
         },
         title: {
             text: 'Temperature per day',
@@ -61,7 +58,6 @@ export default function TemperaturePerStation() {
         },
         series: series
     }
-
 
     return (
         <div>

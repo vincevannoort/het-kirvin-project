@@ -1,3 +1,5 @@
 @tailwind base;
+@tailwind spacing;
+@tailwind interactivity;
 @tailwind components;
 @tailwind utilities;
