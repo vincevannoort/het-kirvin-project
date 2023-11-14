@@ -23,21 +23,22 @@ temperature_per_station = analyse_temperature_per_station(data)
 sunshine_per_day = analyse_sunshine_per_day(data)
 rain_per_day = analyse_rain_per_day(data)
 
-# # save datasets
-# for _file_name, dataset in [
-#     ("temperature_per_day", temperature_per_day),
-#     ("temperature_per_station", temperature_per_station),
-#     ("sunshine_per_day", sunshine_per_day),
-# ]:
-#     print(dataset)
-#     # copy to export folder
-#     dataset.write_json(
-#         f"./data/export/{_file_name}.json",
-#         row_oriented=True,
-#     )
-#     if not running_in_docker():
-#         # also copy to dashboard folder
-#         dataset.write_json(
-#             f"../dashboard/data/{_file_name}.json",
-#             row_oriented=True,
-#         )
+# save datasets
+for _file_name, dataset in [
+    ("temperature_per_day", temperature_per_day),
+    ("temperature_per_station", temperature_per_station),
+    ("sunshine_per_day", sunshine_per_day),
+    ("rain_per_day", rain_per_day),
+]:
+    print(dataset)
+    # copy to export folder
+    dataset.write_json(
+        f"./data/export/{_file_name}.json",
+        row_oriented=True,
+    )
+    if not running_in_docker():
+        # also copy to dashboard folder
+        dataset.write_json(
+            f"../dashboard/data/{_file_name}.json",
+            row_oriented=True,
+        )
