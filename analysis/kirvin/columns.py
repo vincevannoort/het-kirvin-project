@@ -49,7 +49,7 @@ class Column(StrEnum):
     precipitation_duration = auto()
 
     # Hourly precipitation amount (in 0.1 mm) (-1 for <0.05 mm)
-    hourly_precipitation = auto()
+    rainfall_amount = auto()
 
     # Air pressure (in 0.1 hPa) reduced to mean sea level, at the time of observation
     air_pressure = auto()

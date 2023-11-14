@@ -24,7 +24,7 @@ def rename(data: DataFrame) -> DataFrame:
             "SQ": Column.sunshine_duration,
             "Q": Column.global_radiation,
             "DR": Column.precipitation_duration,
-            "RH": Column.hourly_precipitation,
+            "RH": Column.rainfall_amount,
             "P": Column.air_pressure,
             "VV": Column.horizontal_visibility,
             "N": Column.cloud_coverage,
@@ -82,12 +82,27 @@ def clean(data: DataFrame) -> DataFrame:
             .str.to_datetime("%Y%m%d%H%M")
             .alias(Column.date_time),
         )
+        # for sun and rain, small measurements (<0.05hour/<0.01mm) are coded as -1, set to 0
+        .with_columns(
+            when(
+                col(Column.rainfall_amount) == -1,
+            )
+            .then(None)
+            .otherwise(col(Column.rainfall_amount))
+            .keep_name(),
+            when(
+                col(Column.sunshine_duration) == -1,
+            )
+            .then(None)
+            .otherwise(col(Column.sunshine_duration))
+            .keep_name(),
+        )
+        # wheather indicators to logical units, for example rainfall to mm (now in 0.1 mm)
         .with_columns(
             col(Column.temperature) / 10,
             col(Column.sunshine_duration) / 10,
+            col(Column.rainfall_amount) / 10,
         )
-        # drop columns where temperature is not known
-        .drop_nulls(Column.temperature)
         # replace station integers with station names
         .with_columns(
             col(Column.station).cast(str).map_dict(Station.create_int_string_mapping()),
