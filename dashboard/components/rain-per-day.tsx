@@ -6,8 +6,7 @@ import HighchartsReact from 'highcharts-react-official'
 
 export function RainPerDay() {
 
-    // @ts-ignore
-    Highcharts.seriesTypes.scatter.prototype.noSharedTooltip = false;
+    // Highcharts.seriesTypes.scatter.prototype.noSharedTooltip = false;
 
     let series: Array<SeriesLineOptions | SeriesScatterOptions> = [
         {
