@@ -2,10 +2,11 @@
 import TemperaturePerStation from '@/components/temperature-per-station'
 import SunshinePerStation from '@/components/sunshine-per-station'
 import { RainPerDay } from '@/components/rain-per-day'
-import CardMaxTemperature from '@/components/card-max-temperature'
-import CardMinTemperature from '@/components/card-min-temperature'
-import CardMostSunshine from '@/components/card-most-sunshine'
+import { CardMaxTemperature } from '@/components/card-max-temperature'
+import { CardMinTemperature } from '@/components/card-min-temperature'
+import { CardMostSunshine } from '@/components/card-most-sunshine'
 import { CSSProperties } from 'react'
+import { CardMostRain } from '@/components/card-most-rain'
 
 export default function Home() {
   const sectionStyle: CSSProperties = {
@@ -44,7 +45,7 @@ export default function Home() {
           <RainPerDay />
         </div>
         <div className="basis-full lg:basis-1/4">
-          Todo
+          <CardMostRain />
         </div>
       </div>
     </div>

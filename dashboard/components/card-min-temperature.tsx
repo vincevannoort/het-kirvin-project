@@ -5,7 +5,7 @@ import { CardWithValue } from './card-with-value';
 
 
 
-export default function CardMinTemperature() {
+export function CardMinTemperature() {
 
     const min_temperature_day = min_temperature.reduce(function (prev, current) {
         return (prev && prev.min_temperature < current.min_temperature) ? prev : current

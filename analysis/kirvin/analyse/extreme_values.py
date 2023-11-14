@@ -56,18 +56,13 @@ def analyse_most_rain(data: DataFrame) -> DataFrame:
             Column.date,
             Column.station,
         )
-        .agg(col(Column.precipitation_duration).sum())
+        .agg(col(Column.rainfall_amount).sum())
         .sort(Column.date)
         # find rows with most rain
-        .filter(
-            col(Column.precipitation_duration)
-            == col(Column.precipitation_duration).max().over(Column.date)
-        )
+        .filter(col(Column.rainfall_amount) == col(Column.rainfall_amount).max().over(Column.date))
         # rename so output is clear
         .rename(
-            {
-                Column.precipitation_duration: Column.sunshine_duration.precipitation_duration.max_column  # noqa: E501
-            },
+            {Column.rainfall_amount: Column.sunshine_duration.rainfall_amount.max_column},
         )
     )
 

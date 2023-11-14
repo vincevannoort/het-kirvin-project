@@ -3,7 +3,7 @@ import React from "react";
 import { CardWithValue } from './card-with-value';
 
 
-export default function CardMaxTemperature() {
+export function CardMaxTemperature() {
 
     const max_temperature_day = max_temperature.reduce(function (prev, current) {
         return (prev && prev.max_temperature > current.max_temperature) ? prev : current

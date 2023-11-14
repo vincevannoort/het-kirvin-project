@@ -3,7 +3,7 @@ import React from "react";
 import { CardWithValue } from './card-with-value';
 
 
-export default function CardMostSunshine() {
+export function CardMostSunshine() {
 
     const most_sunshine_day = most_sunshine.reduce(function (prev, current) {
         return (prev && prev.max_sunshine_duration > current.max_sunshine_duration) ? prev : current
