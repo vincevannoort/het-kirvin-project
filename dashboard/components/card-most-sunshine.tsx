@@ -15,7 +15,7 @@ export default function CardMostSunshine() {
             date={most_sunshine_day.date}
             value_type={'Sunshine hours'}
             value={most_sunshine_day.max_sunshine_duration}
-            station={most_sunshine_day.station}
+            station={most_sunshine_day.station ? most_sunshine_day.station : 'unknown'}
         />
     )
 }
