@@ -1,68 +1,31 @@
-from polars import DataFrame, col
+from typing import Literal
+
+from polars import DataFrame, Expr, col
 
 from kirvin.columns import Column
 
 
-def analyse_min_temperature(data: DataFrame) -> DataFrame:
+def analyse_extreme_value(
+    data: DataFrame,
+    column: Column,
+    extreme: Literal["min", "max"],
+) -> DataFrame:
+    def get_filter_value(extreme: Literal["min", "max"]) -> Expr:
+        match extreme:
+            case "min":
+                return col(column) == col(column).min().over(Column.date)
+            case "max":
+                return col(column) == col(column).max().over(Column.date)
+
+    renamed_column = column.min_column if extreme == "min" else column.max_column
+
     return (
         data
-        # find rows with min temperature
-        .filter(
-            col(Column.temperature) == col(Column.temperature).min().over(Column.date),
-        )
+        # find rows with filter value
+        .filter(get_filter_value(extreme))
         # rename so output is clear
         .rename(
-            {Column.temperature: Column.temperature.min_column},
-        )
-    )
-
-
-def analyse_max_temperature(data: DataFrame) -> DataFrame:
-    return (
-        data
-        # find rows with max temperature
-        .filter(
-            col(Column.temperature) == col(Column.temperature).max().over(Column.date),
-        )
-        # rename so output is clear
-        .rename(
-            {Column.temperature: Column.temperature.max_column},
-        )
-    )
-
-
-def analyse_most_sunshine(data: DataFrame) -> DataFrame:
-    return (
-        data.group_by(
-            Column.date,
-            Column.station,
-        )
-        .agg(col(Column.sunshine_duration).sum())
-        .sort(Column.date)
-        # find rows with most sunshine duration
-        .filter(
-            col(Column.sunshine_duration) == col(Column.sunshine_duration).max().over(Column.date)
-        )
-        # rename so output is clear
-        .rename(
-            {Column.sunshine_duration: Column.sunshine_duration.max_column},
-        )
-    )
-
-
-def analyse_most_rain(data: DataFrame) -> DataFrame:
-    return (
-        data.group_by(
-            Column.date,
-            Column.station,
-        )
-        .agg(col(Column.rainfall_amount).sum())
-        .sort(Column.date)
-        # find rows with most rain
-        .filter(col(Column.rainfall_amount) == col(Column.rainfall_amount).max().over(Column.date))
-        # rename so output is clear
-        .rename(
-            {Column.rainfall_amount: Column.sunshine_duration.rainfall_amount.max_column},
+            {column: renamed_column},
         )
     )
 
@@ -80,9 +43,27 @@ def analyse_extreme_values(data: DataFrame) -> tuple[DataFrame, DataFrame, DataF
         .sort(Column.date)
     )
 
+    rainfall_data = (
+        data.group_by(
+            Column.date,
+            Column.station,
+        )
+        .agg(col(Column.rainfall_amount).sum())
+        .sort(Column.date)
+    )
+
+    sunshine_data = (
+        data.group_by(
+            Column.date,
+            Column.station,
+        )
+        .agg(col(Column.sunshine_duration).sum())
+        .sort(Column.date)
+    )
+
     return (
-        analyse_max_temperature(temperature_data),
-        analyse_min_temperature(temperature_data),
-        analyse_most_sunshine(data),
-        analyse_most_rain(data),
+        analyse_extreme_value(temperature_data, Column.temperature, "max"),
+        analyse_extreme_value(temperature_data, Column.temperature, "min"),
+        analyse_extreme_value(sunshine_data, Column.sunshine_duration, "max"),
+        analyse_extreme_value(rainfall_data, Column.rainfall_amount, "max"),
     )
