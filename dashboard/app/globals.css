@@ -1,5 +1,5 @@
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+@tailwind base;
+@tailwind spacing;
+@tailwind interactivity;
+@tailwind components;
+@tailwind utilities;
