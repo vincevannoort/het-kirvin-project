@@ -4,7 +4,7 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@n
 export function Navigation() {
     return (
         <Navbar
-            maxWidth='2xl'
+            maxWidth='xl'
             classNames={{ wrapper: "px-4" }}
             isBordered
         >
