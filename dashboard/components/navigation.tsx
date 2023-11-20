@@ -11,7 +11,7 @@ export function Navigation() {
             <NavbarBrand>
                 <p className="font-bold text-inherit">KIRVIN Project</p>
             </NavbarBrand>
-            <NavbarContent justify="center">
+            <NavbarContent className="hidden sm:flex" justify="center">
                 <NavbarItem>
                     <Link color="foreground" href="#temperature">
                         Temperature

@@ -8,46 +8,71 @@ import { CardMostSunshine } from '@/components/card-most-sunshine'
 import { CSSProperties } from 'react'
 import { CardMostRain } from '@/components/card-most-rain'
 
-export default function Home() {
+type SectionProperties = {
+  id: string,
+  left: JSX.Element,
+  right: JSX.Element,
+}
+
+
+function Section({ id, left, right }: SectionProperties) {
   const sectionStyle: CSSProperties = {
     // offset scrolling with 4rem (height of navbar) + 2.5rem (space above section) to make space for 
     scrollMarginTop: `calc(4rem + 2.5rem)`,
   }
   return (
+    <div id={id} className="flex flex-wrap lg:flex-nowrap lg:space-x-10" style={sectionStyle}>
+      <div className="basis-full lg:basis-3/4 mb-6 lg:mb-0">
+        {left}
+      </div>
+      <div className="basis-full lg:basis-1/4">
+        {right}
+      </div>
+    </div>
+  )
+}
+
+export default function Home() {
+  return (
     <div className="container mx-auto px-4 pt-10">
 
       {/* temperature section */}
-      <div id="temperature" className="flex flex-wrap lg:flex-nowrap space-x-10" style={sectionStyle}>
-        <div className="basis-full lg:basis-3/4 mb-6 lg:mb-0">
+      <Section
+        id="temperature"
+        left={
           <TemperaturePerStation />
-        </div>
-        <div className="basis-full lg:basis-1/4">
-          <CardMaxTemperature />
-          <CardMinTemperature />
-        </div>
-      </div>
+        }
+        right={(
+          <>
+            <CardMaxTemperature />
+            <CardMinTemperature />
+          </>
+        )}
+      />
       <hr style={{ margin: 50 }} />
 
       {/* sunshine section */}
-      <div id="sunshine" className="flex space-x-10" style={sectionStyle}>
-        <div className="basis-full lg:basis-3/4 mb-6 lg:mb-0">
+      <Section
+        id="sunshine"
+        left={
           <SunshinePerStation />
-        </div>
-        <div className="basis-full lg:basis-1/4">
+        }
+        right={
           <CardMostSunshine />
-        </div>
-      </div>
+        }
+      />
       <hr style={{ margin: 50 }} />
 
       {/* rain section */}
-      <div id="rain" className="flex space-x-10" style={sectionStyle}>
-        <div className="basis-full lg:basis-3/4 mb-6 lg:mb-0">
+      <Section
+        id="rain"
+        left={
           <RainPerDay />
-        </div>
-        <div className="basis-full lg:basis-1/4">
+        }
+        right={
           <CardMostRain />
-        </div>
-      </div>
+        }
+      />
     </div>
   )
 }

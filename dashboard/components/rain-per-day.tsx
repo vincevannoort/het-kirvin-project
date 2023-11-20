@@ -28,9 +28,6 @@ export function RainPerDay() {
     ]
 
     const options: Highcharts.Options = {
-        chart: {
-            height: 700,
-        },
         title: {
             text: 'Rain per day',
         },

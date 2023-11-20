@@ -33,9 +33,6 @@ export default function TemperaturePerStation() {
     ]
 
     const options: Highcharts.Options = {
-        chart: {
-            height: "50%",
-        },
         title: {
             text: 'Temperature per day',
         },
