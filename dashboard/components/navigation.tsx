@@ -4,14 +4,14 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@n
 export function Navigation() {
     return (
         <Navbar
-            maxWidth='xl'
+            maxWidth='2xl'
             classNames={{ wrapper: "px-4" }}
             isBordered
         >
             <NavbarBrand>
                 <p className="font-bold text-inherit">KIRVIN Project</p>
             </NavbarBrand>
-            <NavbarContent className="hidden sm:visible sm:flex" justify="center">
+            <NavbarContent className="hidden" justify="center">
                 <NavbarItem>
                     <Link color="foreground" href="#temperature">
                         Temperature
