@@ -1,6 +1,5 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
 
-
 export function Navigation() {
     return (
         <Navbar
@@ -9,7 +8,7 @@ export function Navigation() {
             isBordered
         >
             <NavbarBrand>
-                <p className="font-bold text-inherit">KIRVIN Project</p>
+                <Link href="/" className="font-bold text-inherit">KIRVIN Project</Link>
             </NavbarBrand>
             <NavbarContent className="hidden md:flex" justify="center">
                 <NavbarItem>

@@ -26,10 +26,8 @@ export default function TemperaturePerStation() {
             text: 'Sunshine per day',
         },
         tooltip: {
-            shared: true
-        },
-        subtitle: {
-            text: 'Example',
+            shared: true,
+            valueSuffix: " hours",
         },
         yAxis: {
             title: {
@@ -38,6 +36,7 @@ export default function TemperaturePerStation() {
         },
         xAxis: {
             type: 'datetime',
+            crosshair: true,
             title: {
                 text: 'Day'
             }

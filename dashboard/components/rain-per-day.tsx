@@ -17,10 +17,11 @@ export function RainPerDay() {
             data: rain_per_day.map(row => [row.date, row.rollmean]),
         }, {
             type: "scatter",
-            opacity: 0.5,
+            opacity: 0.2,
             name: 'average',
             marker: {
-                symbol: 'circle'
+                symbol: 'circle',
+                radius: 3,
             },
             color: 'blue',
             data: rain_per_day.map(row => [row.date, row.rainfall_amount]),
@@ -37,7 +38,7 @@ export function RainPerDay() {
         },
         yAxis: {
             title: {
-                text: ''
+                text: 'Rain (mm)',
             },
             labels: {
                 format: '{value} mm'

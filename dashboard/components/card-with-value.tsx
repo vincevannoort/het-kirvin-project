@@ -1,6 +1,7 @@
 import min_temperature from '@/data/min_temperature.json'
 import React from "react";
 import { Card, CardHeader, CardBody, Divider } from "@nextui-org/react";
+import { format } from 'date-fns';
 
 type CardProperties = {
     title: string,
@@ -12,9 +13,7 @@ type CardProperties = {
 
 export function CardWithValue({ title, date, value_type, value, station }: CardProperties) {
 
-    const min_temperature_day = min_temperature.reduce(function (prev, current) {
-        return (prev && prev.min_temperature < current.min_temperature) ? prev : current
-    })
+    const formattedDate = format(new Date(date), 'd MMMM yyyy');
 
     return (
         <Card className="mb-5">
@@ -25,7 +24,7 @@ export function CardWithValue({ title, date, value_type, value, station }: CardP
             <Divider />
             <CardBody>
                 <p>
-                    Date: {date}<br />
+                    Date: {formattedDate}<br />
                     {value_type}: {value}<br />
                     Station: {station}
                 </p>

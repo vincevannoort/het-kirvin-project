@@ -30,7 +30,7 @@ def analyse_sunshine_per_day(data: DataFrame) -> DataFrame:
         # convert date to timestamp
         .with_columns(
             col(Column.date).dt.timestamp("ms"),
-            col(Column.sunshine_duration).rolling_mean(window_size=7, center=True),
+            col(Column.sunshine_duration).rolling_mean(window_size=7, center=True).round(1),
         )
     )
     return tab

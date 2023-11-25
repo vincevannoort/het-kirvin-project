@@ -23,6 +23,10 @@ def analyse_extreme_value(
         data
         # find rows with filter value
         .filter(get_filter_value(extreme))
+        # round the column of interest
+        .with_columns(
+            col(column).round(1)
+        )
         # rename so output is clear
         .rename(
             {column: renamed_column},

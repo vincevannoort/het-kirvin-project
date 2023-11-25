@@ -5,7 +5,10 @@ from kirvin.columns import Column
 
 def analyse_temperature_per_station(data: DataFrame) -> DataFrame:
     return (
-        data.group_by(
+        data
+        # remove all rows without a temperature
+        .drop_nulls(Column.temperature)
+        .group_by(
             [
                 Column.station,
                 Column.date,

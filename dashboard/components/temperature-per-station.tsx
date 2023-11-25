@@ -18,7 +18,7 @@ export default function TemperaturePerStation() {
             lineWidth: 1,
             color: 'blue',
             zIndex: 100,
-            name: 'Average',
+            name: 'Average (7d)',
             data: temperature_per_day.map(d => [d.date, d.temperature]),
         },
         // append lines for each station (first five)
@@ -37,10 +37,8 @@ export default function TemperaturePerStation() {
             text: 'Temperature per day',
         },
         tooltip: {
-            shared: true
-        },
-        subtitle: {
-            text: 'Example',
+            shared: true,
+            valueSuffix: "°",
         },
         yAxis: {
             title: {
@@ -49,6 +47,7 @@ export default function TemperaturePerStation() {
         },
         xAxis: {
             type: 'datetime',
+            crosshair: true,
             title: {
                 text: 'Day'
             }
