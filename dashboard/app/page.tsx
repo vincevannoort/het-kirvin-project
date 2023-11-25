@@ -49,7 +49,7 @@ export default function Home() {
           </>
         )}
       />
-      <hr style={{ margin: 50 }} />
+      <hr className='my-4 md:my-12' />
 
       {/* sunshine section */}
       <Section
@@ -61,7 +61,7 @@ export default function Home() {
           <CardMostSunshine />
         }
       />
-      <hr style={{ margin: 50 }} />
+      <hr className='my-4 md:my-12' />
 
       {/* rain section */}
       <Section
