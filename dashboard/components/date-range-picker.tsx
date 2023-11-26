@@ -11,7 +11,7 @@ type DateRange = {
 
 interface DateRangeState {
     dateRange: DateRange
-    update: (value: DateRange) => void
+    update: (value: DateValueType) => void
 }
 
 export function timestamp_within_date_range(timestamp: number, dateRange: DateRange): boolean {
@@ -25,7 +25,7 @@ export const useDateRangeStore = create<DateRangeState>()((set) => ({
     },
     // input is type provided by react-tailwindcss-datepicker, 
     // we convert it to our own type which cannot be null
-    update: (value: DateValueType) => {
+    update: (value) => {
         // ensure we always have a valid date range
         if (!value || !value.startDate || !value.endDate) {
             return
