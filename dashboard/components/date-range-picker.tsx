@@ -23,10 +23,14 @@ export const useDateRangeStore = create<DateRangeState>()((set) => ({
         startDate: new Date(new Date().getFullYear(), 0, 1),
         endDate: new Date(),
     },
-    // input is type provided by react-tailwindcss-datepicker, 
-    // we convert it to our own type which cannot be null
-    update: (value) => {
-        // ensure we always have a valid date range
+    // handles updates from the date range picker to the data store
+    // 
+    // the `DateValueType` is type provided by react-tailwindcss-datepicker, 
+    // which we receive as updates from the `Datepicker` component,
+    // this update function then only updates the `dateRange` state when
+    // the `DateValueType` contains a `startDate` and `endDate`
+    update: (value: DateValueType) => {
+        // do not update when `startDate` or `endDate` is missing
         if (!value || !value.startDate || !value.endDate) {
             return
         }

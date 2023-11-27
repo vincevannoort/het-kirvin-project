@@ -7,6 +7,7 @@ import { timestamp_within_date_range, useDateRangeStore } from './date-range-pic
 
 
 export default function TemperaturePerStation() {
+    // retrieve date range from store (automatically updated by date range picker)
     const { dateRange } = useDateRangeStore();
 
     let series: Array<SeriesLineOptions> = [
