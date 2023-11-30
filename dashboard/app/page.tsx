@@ -7,6 +7,7 @@ import { CardMinTemperature } from '@/components/card-min-temperature'
 import { CardMostSunshine } from '@/components/card-most-sunshine'
 import { CSSProperties } from 'react'
 import { CardMostRain } from '@/components/card-most-rain'
+import { CardDayStatistics } from '@/components/card-day-statistics'
 
 type SectionProperties = {
   id: string,
@@ -73,6 +74,8 @@ export default function Home() {
           <CardMostRain />
         }
       />
+
+      <CardDayStatistics />
     </div>
   )
 }
