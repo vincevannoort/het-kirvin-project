@@ -35,7 +35,7 @@ function Section({ id, left, right }: SectionProperties) {
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 py-8 md:py-16">
+    <div className="container mx-auto px-4 pt-4 pb-8 md:py-16">
 
       {/* temperature section */}
       <Section

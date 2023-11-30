@@ -3,9 +3,12 @@
 import sunshine_per_day from '@/data/sunshine_per_day.json'
 import Highcharts, { SeriesLineOptions, SeriesOptionsType } from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import { timestamp_within_date_range, useDateRangeStore } from './date-range-picker';
 
 
 export default function TemperaturePerStation() {
+    // retrieve date range from store (automatically updated by date range picker)
+    const { dateRange } = useDateRangeStore();
 
     let series: Array<SeriesLineOptions> = [
         // create line for average
@@ -17,7 +20,11 @@ export default function TemperaturePerStation() {
             color: 'blue',
             zIndex: 100,
             name: 'Average (7d)',
-            data: sunshine_per_day.map(d => [d.date, d.sunshine_duration]),
+            data: sunshine_per_day
+                // only keep dates within date range
+                .filter(row => timestamp_within_date_range(row.date, dateRange))
+                // map to required input format
+                .map(d => [d.date, d.sunshine_duration]),
         },
     ]
 

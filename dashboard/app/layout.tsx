@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { Providers } from "./providers";
 import './globals.css';
 import { Navigation } from '@/components/navigation';
+import { DateRangePicker } from '@/components/date-range-picker';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Navigation />
+          <div className="container mx-auto px-4">
+            <DateRangePicker />
+          </div>
           {children}
         </Providers>
       </body>
