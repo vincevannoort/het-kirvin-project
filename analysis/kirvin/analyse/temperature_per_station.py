@@ -8,18 +8,13 @@ def analyse_temperature_per_station(data: DataFrame) -> DataFrame:
         data
         # remove all rows without a temperature
         .drop_nulls(Column.temperature)
-        .group_by(
-            [
-                Column.station,
-                Column.date,
-            ],
-            maintain_order=True,
+        .with_columns(
+            col(Column.station),
+            # round temperature
+            col(Column.temperature).round(1),
+            # convert date to timestamp
+            col(Column.date).dt.timestamp("ms"),
         )
-        .agg(
-            col(Column.temperature).mean().round(1),
-        )
-        # convert date to timestamp
-        .with_columns(col(Column.date).dt.timestamp("ms"))
         # create row per station
         .groupby(
             Column.station,

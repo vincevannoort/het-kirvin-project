@@ -20,7 +20,12 @@ export function timestamp_within_date_range(timestamp: number, dateRange: DateRa
 
 export const useDateRangeStore = create<DateRangeState>()((set) => ({
     dateRange: {
-        startDate: new Date(new Date().getFullYear(), 0, 1),
+        // set start date to one year ago
+        startDate: (() => {
+            let startDate = new Date()
+            startDate.setFullYear(new Date().getFullYear() - 1)
+            return startDate
+        })(),
         endDate: new Date(),
     },
     // handles updates from the date range picker to the data store

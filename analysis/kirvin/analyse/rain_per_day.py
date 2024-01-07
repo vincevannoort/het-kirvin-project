@@ -6,15 +6,6 @@ from kirvin.columns import Column
 def analyse_rain_per_day(data: DataFrame) -> DataFrame:
     tab = (
         data
-        # Sum of rain per day for each station seperataly
-        .group_by(
-            Column.date,
-            Column.station,
-            maintain_order=True,
-        )
-        .agg(
-            col(Column.rainfall_amount).sum(),
-        )
         # take average per day over all stations
         .group_by(
             Column.date,

@@ -3,8 +3,10 @@
 import rain_per_day from '@/data/rain_per_day.json'
 import Highcharts, { SeriesLineOptions, SeriesScatterOptions } from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import { timestamp_within_date_range, useDateRangeStore } from './date-range-picker';
 
 export function RainPerDay() {
+    const { dateRange } = useDateRangeStore();
 
     // Highcharts.seriesTypes.scatter.prototype.noSharedTooltip = false;
 
@@ -14,7 +16,7 @@ export function RainPerDay() {
             name: '7-day moving average',
             lineWidth: 2,
             color: 'blue',
-            data: rain_per_day.map(row => [row.date, row.rollmean]),
+            data: rain_per_day.filter(row => timestamp_within_date_range(row.date, dateRange)).map(row => [row.date, row.rollmean]),
         }, {
             type: "scatter",
             opacity: 0.2,
@@ -24,7 +26,7 @@ export function RainPerDay() {
                 radius: 3,
             },
             color: 'blue',
-            data: rain_per_day.map(row => [row.date, row.rainfall_amount]),
+            data: rain_per_day.filter(row => timestamp_within_date_range(row.date, dateRange)).map(row => [row.date, row.rainfall_amount]),
         }
     ]
 

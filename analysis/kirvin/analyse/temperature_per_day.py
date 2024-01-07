@@ -5,7 +5,9 @@ from kirvin.columns import Column
 
 def analyse_temperature_per_day(data: DataFrame) -> DataFrame:
     tab = (
-        data.group_by(
+        data
+        # take average over all stations
+        .group_by(
             Column.date,
             maintain_order=True,
         )

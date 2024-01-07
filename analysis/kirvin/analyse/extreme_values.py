@@ -20,13 +20,15 @@ def analyse_extreme_value(
     renamed_column = column.min_column if extreme == "min" else column.max_column
 
     return (
-        data
+        data.select(
+            col(Column.station),
+            col(Column.date),
+            col(column),
+        )
         # find rows with filter value
         .filter(get_filter_value(extreme))
         # round the column of interest
-        .with_columns(
-            col(column).round(1)
-        )
+        .with_columns(col(column).round(1))
         # rename so output is clear
         .rename(
             {column: renamed_column},
@@ -35,39 +37,9 @@ def analyse_extreme_value(
 
 
 def analyse_extreme_values(data: DataFrame) -> tuple[DataFrame, DataFrame, DataFrame, DataFrame]:
-    temperature_data = (
-        data
-        # select required columns
-        .select(
-            Column.date,
-            Column.station,
-            Column.temperature,
-        )
-        # already sort by date
-        .sort(Column.date)
-    )
-
-    rainfall_data = (
-        data.group_by(
-            Column.date,
-            Column.station,
-        )
-        .agg(col(Column.rainfall_amount).sum())
-        .sort(Column.date)
-    )
-
-    sunshine_data = (
-        data.group_by(
-            Column.date,
-            Column.station,
-        )
-        .agg(col(Column.sunshine_duration).sum())
-        .sort(Column.date)
-    )
-
     return (
-        analyse_extreme_value(temperature_data, Column.temperature, "max"),
-        analyse_extreme_value(temperature_data, Column.temperature, "min"),
-        analyse_extreme_value(sunshine_data, Column.sunshine_duration, "max"),
-        analyse_extreme_value(rainfall_data, Column.rainfall_amount, "max"),
+        analyse_extreme_value(data, Column.temperature, "max"),
+        analyse_extreme_value(data, Column.temperature, "min"),
+        analyse_extreme_value(data, Column.sunshine_duration, "max"),
+        analyse_extreme_value(data, Column.rainfall_amount, "max"),
     )
